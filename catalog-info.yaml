@@ -1,0 +1,44 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: pedidos-api
+  description: Servico backend responsavel pelo ciclo de vida dos pedidos
+  annotations:
+    github.com/project-slug: sua-org/pedidos-api
+  tags:
+    - backend
+    - node
+spec:
+  type: service
+  lifecycle: production
+  owner: user:default/rafael
+  system: plataforma-ecommerce
+  providesApis:
+    - pedidos-rest-api
+  dependsOn:
+    - resource:default/pedidos-db
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: pedidos-rest-api
+  description: API REST para consulta e criacao de pedidos
+  annotations:
+    github.com/project-slug: sua-org/pedidos-api
+spec:
+  type: openapi
+  lifecycle: production
+  owner: user:default/rafael
+  system: plataforma-ecommerce
+  definition: |
+    openapi: 3.0.0
+    info:
+      title: Pedidos REST API
+      version: 1.0.0
+    paths:
+      /pedidos:
+        get:
+          summary: Lista pedidos
+          responses:
+            '200':
+              description: Lista de pedidos retornada com sucesso
